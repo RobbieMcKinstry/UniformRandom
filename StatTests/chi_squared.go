@@ -6,15 +6,15 @@ import (
 	"github.com/RobbieMcKinstry/UniformRandom/RandGen"
 )
 
-func ChiSquared(gen RandGen.Generator, sampleSize int) int {
+func ChiSquared(ds *RandGen.Dataset) int {
 
 	var buckets []int = make([]int, 10)
 	for i := 0; i < 10; i++ {
 		buckets[i] = 0
 	}
 
-	for i := 0; i < sampleSize; i++ {
-		num := gen.Float()
+	for i := 0; i < ds.Len(); i++ {
+		num := ds.Get(i)
 		switch {
 		case num < 0.1:
 			buckets[0] = num

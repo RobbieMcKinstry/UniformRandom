@@ -78,7 +78,6 @@ func NewMMIXGen() Generator {
 	}
 }
 
-//a = 101427, c = 321, m = 216
 func LipschultzGen() Generator {
 	return &generator{
 		x:          1,
@@ -90,7 +89,6 @@ func LipschultzGen() Generator {
 
 func NewRANDUGen() Generator {
 	return &generator{
-		// a = 65539, c = 0, m = 231
 		x:          1,
 		increment:  0,
 		mod:        231,
@@ -110,7 +108,6 @@ func (g *generator) SetSeed(seed int64) {
 }
 
 func (g *generator) Float() float64 {
-	// Xi+1 = (aXi + c) mod m. divide xi+1 by m to get the value.
 	x1 := (g.multipler * g.x) % g.mod
 	g.x = x1
 
