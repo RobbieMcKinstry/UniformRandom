@@ -44,8 +44,9 @@ func ChiSquared(ds *RandGenerator.Dataset) float64 {
 
 	testStatistic := 0.0
 	for _, bucket := range buckets {
-		var expected = int(ds.Len() / 10.0)
-		testStatistic += float64(((bucket - expected) * (bucket - expected))) / float64((expected))
+		var expected = ds.Len() / 10.0
+		bucketVal := float64(bucket)
+		testStatistic += ((bucketVal - float64(expected)) * (bucketVal - float64(expected))) / float64(expected)
 	}
 	return testStatistic
 }

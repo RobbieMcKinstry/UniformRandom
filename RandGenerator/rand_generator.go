@@ -2,7 +2,7 @@ package RandGenerator
 
 const (
 	_        = iota
-	HalfWord = 2 << (32 * iota)
+	HalfWord = 1 << (32 * iota)
 
 	GCCMultiplier = 1103515245
 	GCCIncrement  = 12345
@@ -72,7 +72,7 @@ func LipschultzGen() Generator {
 	return &generator{
 		x:          1,
 		increment:  321,
-		mod:        2 << 16,
+		mod:        1 << 16,
 		multiplier: 101427,
 	}
 }
@@ -82,7 +82,7 @@ func NewRANDUGen() Generator {
 	return &generator{
 		x:          1,
 		increment:  0,
-		mod:        2 << 31,
+		mod:        1 << 31,
 		multiplier: 65539,
 	}
 }
