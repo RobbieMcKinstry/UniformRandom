@@ -3,13 +3,12 @@ package RandGenerator
 const (
 	_        = iota
 	HalfWord = 2 << (32 * iota)
-	Word     = 2 << (32 * iota)
 
 	GCCMultiplier = 1103515245
 	GCCIncrement  = 12345
 
-	NumericalRecipiesMultipler = 1664525
-	NumericalRecipiesIncrement = 1013904223
+	NumericalRecipiesMultiplier = 1664525
+	NumericalRecipiesIncrement  = 1013904223
 
 	VisualMultiplier = 214013
 	VisualIncrement  = 2531011
@@ -20,10 +19,10 @@ const (
 
 type Generator interface {
 	Float() float64
-	SetSeed() int64
+	SetSeed(int)
 }
 
-func New(multiplierVal, incrementVal, modulus int64) Generator {
+func New(multiplierVal, incrementVal, modulus uint64) Generator {
 	return &generator{
 		x:          1,
 		increment:  incrementVal,
@@ -32,7 +31,7 @@ func New(multiplierVal, incrementVal, modulus int64) Generator {
 	}
 }
 
-func NewWithSeed(multiplierVal, incrementVal, modulus, seed int64) Generator {
+func NewWithSeed(multiplierVal, incrementVal, modulus, seed uint64) Generator {
 	return &generator{
 		x:          seed,
 		increment:  incrementVal,
@@ -69,47 +68,39 @@ func NewVisualGen() Generator {
 	}
 }
 
-func NewMMIXGen() Generator {
-	return &generator{
-		x:          1,
-		increment:  MMIXIncrement,
-		mod:        Word,
-		multiplier: MMIXMultiplier,
-	}
-}
-
 func LipschultzGen() Generator {
 	return &generator{
 		x:          1,
 		increment:  321,
-		mod:        216,
+		mod:        2 << 16,
 		multiplier: 101427,
 	}
 }
 
+// a = 65539, c = 0, m = 2^31
 func NewRANDUGen() Generator {
 	return &generator{
 		x:          1,
 		increment:  0,
-		mod:        231,
+		mod:        2 << 31,
 		multiplier: 65539,
 	}
 }
 
 type generator struct {
-	x          int64
-	increment  int64
-	mod        int64
-	multiplier int64
+	x          uint64
+	increment  uint64
+	mod        uint64
+	multiplier uint64
 }
 
-func (g *generator) SetSeed(seed int64) {
-	g.x = seed
+func (g *generator) SetSeed(seed int) {
+	g.x = uint64(seed)
 }
 
 func (g *generator) Float() float64 {
-	x1 := (g.multipler * g.x) % g.mod
+	x1 := (g.multiplier*g.x + g.increment) % g.mod
 	g.x = x1
 
-	return (x1 * 1.0) / g.mod
+	return float64(x1) / float64(g.mod)
 }

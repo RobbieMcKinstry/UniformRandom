@@ -4,7 +4,7 @@ type Dataset struct {
 	data []float64
 }
 
-func NewDataset(gen Generator, size int64) *Dataset {
+func NewDataset(gen Generator, size int) *Dataset {
 	set := &Dataset{
 		data: make([]float64, size),
 	}
@@ -14,18 +14,18 @@ func NewDataset(gen Generator, size int64) *Dataset {
 	return set
 }
 
-func (ds *Dataset) Get(index int64) {
+func (ds *Dataset) Get(index int) float64 {
 	return ds.data[index]
 }
 
-func (ds *Dataset) Len() int64 {
+func (ds *Dataset) Len() int {
 	return len(ds.data)
 }
 
-func (ds *Dataset) Mean() int64 {
-	sum := 0
+func (ds *Dataset) Mean() float64 {
+	sum := 0.0
 	for _, val := range ds.data {
 		sum += val
 	}
-	return sum / ds.Len()
+	return sum / float64(ds.Len())
 }

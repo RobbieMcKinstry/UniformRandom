@@ -1,5 +1,9 @@
 package StatTests
 
-func KolmogorovSmirnov(ds *RandGen.Dataset) int {
+import (
+	"github.com/RobbieMcKinstry/UniformRandom/RandGenerator"
+)
 
+func KolmogorovSmirnov(ds *RandGenerator.Dataset) int {
+	return 0
 }

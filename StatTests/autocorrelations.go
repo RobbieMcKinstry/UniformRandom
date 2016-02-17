@@ -1,5 +1,10 @@
 package StatTests
 
-func Autocorrelation(ds *RandGen.Dataset) int {
+import (
+	"github.com/RobbieMcKinstry/UniformRandom/RandGenerator"
+)
 
+func Autocorrelation(ds *RandGenerator.Dataset) int {
+
+	return 0
 }
