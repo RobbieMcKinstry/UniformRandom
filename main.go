@@ -59,7 +59,7 @@ func main() {
 					Action: func(c *cli.Context) {
 						gen = rand.New(rand.NewSource(SEED))
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Standard Library Kolmogorov Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Standard Library Kolmogorov Test Statistic:\t%f\n", StatTests.KolmogorovSmirnov(ds))
 					},
 				}, {
 					Name:  "lipschultz",
@@ -68,7 +68,7 @@ func main() {
 						gen = RandGenerator.LipschultzGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Lipschultz Kolmogorov Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Lipschultz Kolmogorov Test Statistic:\t%f\n", StatTests.KolmogorovSmirnov(ds))
 					},
 				}, {
 					Name:  "randu",
@@ -77,7 +77,7 @@ func main() {
 						gen = RandGenerator.NewRANDUGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("RANDU Kolmogorov Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("RANDU Kolmogorov Test Statistic:\t%f\n", StatTests.KolmogorovSmirnov(ds))
 					},
 				},
 			},
@@ -95,7 +95,7 @@ func main() {
 					Action: func(c *cli.Context) {
 						gen = rand.New(rand.NewSource(SEED))
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Standard Library Run Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Standard Library Run Test Statistic:\t%f\n", StatTests.Run(ds, StatTests.DIFFERENCE))
 					},
 				}, {
 					Name:  "lipschultz",
@@ -104,16 +104,16 @@ func main() {
 						gen = RandGenerator.LipschultzGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Lipschultz Run Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Lipschultz Run Test Statistic:\t%f\n", StatTests.Run(ds, StatTests.DIFFERENCE))
 					},
 				}, {
 					Name:  "randu",
 					Usage: "uses the generator seeded as a = 65539, c = 0, m = 1 << 31",
 					Action: func(c *cli.Context) {
-						gen = RandGenerator.LipschultzGen()
+						gen = RandGenerator.NewRANDUGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Lipschultz Run Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("RANDU Run Test Statistic:\t%f\n", StatTests.Run(ds, StatTests.DIFFERENCE))
 					},
 				},
 			},
@@ -131,7 +131,8 @@ func main() {
 					Action: func(c *cli.Context) {
 						gen = rand.New(rand.NewSource(SEED))
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Standard Library Autocorrelation Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						mu, variance := StatTests.Autocorrelation(ds, 1, 3)
+						fmt.Printf("Standard Library Autocorrelation Test Statistic:\t%f\n", mu/variance)
 
 					},
 				}, {
@@ -141,16 +142,18 @@ func main() {
 						gen = RandGenerator.LipschultzGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Lipschultz Autocorrelation Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						mu, variance := StatTests.Autocorrelation(ds, 1, 3)
+						fmt.Printf("Lipschultz Autocorrelation Test Statistic:\t%f\n", mu/variance)
 					},
 				}, {
 					Name:  "randu",
 					Usage: "uses the generator seeded as a = 65539, c = 0, m = 1 << 31",
 					Action: func(c *cli.Context) {
-						gen = RandGenerator.LipschultzGen()
+						gen = RandGenerator.NewRANDUGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("RANDU Autocorrelation Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						mu, variance := StatTests.Autocorrelation(ds, 1, 3)
+						fmt.Printf("RANDU Autocorrelation Test Statistic:\t%f\n", mu/variance)
 					},
 				},
 			},
@@ -168,7 +171,7 @@ func main() {
 					Action: func(c *cli.Context) {
 						gen = rand.New(rand.NewSource(SEED))
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Standard Library Chi Square Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Standard Library Chi Square Test Statistic:\t%f\n", StatTests.ChiSquared(ds))
 					},
 				}, {
 					Name:  "lipschultz",
@@ -177,16 +180,16 @@ func main() {
 						gen = RandGenerator.LipschultzGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("Lipschultz Chi Square Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("Lipschultz Chi Square Test Statistic:\t%f\n", StatTests.ChiSquared(ds))
 					},
 				}, {
 					Name:  "randu",
 					Usage: "uses the generator seeded as a = 65539, c = 0, m = 1 << 31",
 					Action: func(c *cli.Context) {
-						gen = RandGenerator.LipschultzGen()
+						gen = RandGenerator.NewRANDUGen()
 						gen.Seed(SEED)
 						ds = RandGenerator.NewDataset(gen, size)
-						fmt.Printf("RANDU Chi Square Test Statistic:\t%f", StatTests.KolmogorovSmirnov(ds))
+						fmt.Printf("RANDU Chi Square Test Statistic:\t%f\n", StatTests.ChiSquared(ds))
 
 					},
 				},
