@@ -18,8 +18,8 @@ const (
 )
 
 type Generator interface {
-	Float() float64
-	SetSeed(int)
+	Float64() float64
+	Seed(int64)
 }
 
 func New(multiplierVal, incrementVal, modulus uint64) Generator {
@@ -94,11 +94,11 @@ type generator struct {
 	multiplier uint64
 }
 
-func (g *generator) SetSeed(seed int) {
+func (g *generator) Seed(seed int64) {
 	g.x = uint64(seed)
 }
 
-func (g *generator) Float() float64 {
+func (g *generator) Float64() float64 {
 	x1 := (g.multiplier*g.x + g.increment) % g.mod
 	g.x = x1
 
