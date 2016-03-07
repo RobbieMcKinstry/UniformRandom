@@ -123,6 +123,7 @@ func main() {
 			Usage:   "autocorrelation test for independence",
 			Action: func(c *cli.Context) {
 				cli.ShowSubcommandHelp(c)
+				os.Exit(0)
 			},
 			Subcommands: []cli.Command{
 				{

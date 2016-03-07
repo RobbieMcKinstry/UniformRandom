@@ -5,42 +5,42 @@ import (
 )
 
 type Dataset struct {
-	data []float64
+	Data []float64
 }
 
 func NewDataset(gen Generator, size int) *Dataset {
 	set := &Dataset{
-		data: make([]float64, size),
+		Data: make([]float64, size),
 	}
 	for i := 0; i < size; i++ {
-		set.data[i] = gen.Float64()
+		set.Data[i] = gen.Float64()
 	}
 	return set
 }
 
 func (ds *Dataset) Get(index int) float64 {
-	return ds.data[index]
+	return ds.Data[index]
 }
 
 func (ds *Dataset) Len() int {
-	return len(ds.data)
+	return len(ds.Data)
 }
 
 func (ds *Dataset) Mean() float64 {
 	sum := 0.0
-	for _, val := range ds.data {
+	for _, val := range ds.Data {
 		sum += val
 	}
 	return sum / float64(ds.Len())
 }
 
 func (ds *Dataset) Sort() *Dataset {
-	result := make([]float64, len(ds.data))
-	for i, elem := range ds.data {
+	result := make([]float64, len(ds.Data))
+	for i, elem := range ds.Data {
 		result[i] = elem
 	}
 	sort.Float64s(result)
-	return &Dataset{data: result}
+	return &Dataset{Data: result}
 }
 
 func (ds *Dataset) Subset(start, end int) *Dataset {
@@ -48,5 +48,5 @@ func (ds *Dataset) Subset(start, end int) *Dataset {
 	for i := start; i < end; i++ {
 		result[i] = ds.Get(i)
 	}
-	return &Dataset{data: result}
+	return &Dataset{Data: result}
 }
